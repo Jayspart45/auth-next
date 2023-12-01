@@ -27,6 +27,9 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+  const handleForgotPassword = () => {
+    router.push("/sendforgotpass");
+  };
   useEffect(() => {
     if (user.email.length > 0 && user.password.length > 0) {
       setButtonDisabled(false);
@@ -62,6 +65,9 @@ export default function LoginPage() {
         onChange={(e) => setUser({ ...user, password: e.target.value })}
         type="password"
       />
+      <button className="mb-4 text-yellow-600 " onClick={handleForgotPassword}>
+        Forgot password
+      </button>
       <button
         onClick={handleLogin}
         className="px-4 py-2 bg-zinc-800 text-gray-300 border-gray-300 rounded mb-4 focus:outline-none focus:border-gray-600"

@@ -12,10 +12,11 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
         verifyTokenExpiry: Date.now() + 3600000,
       });
     } else if (emailType === "RESET") {
-      await User.findByIdAndUpdate(userId, {
+      const updatedUser = await User.findByIdAndUpdate(userId, {
         forgotPasswordToken: hashedToken,
-        forgotPasswordExpiry: Date.now() + 3600000,
+        forgotPasswordTokenExpiry: Date.now() + 3600000,
       });
+      console.log(updatedUser);
     }
     var transport = nodemailer.createTransport({
       host: "sandbox.smtp.mailtrap.io",
@@ -30,9 +31,9 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
       to: email,
       subject:
         emailType === "VERIFY" ? "Verify your email" : "Reset your password",
-      html: `<p>Click <a href="${
-        process.env.DOMAIN
-      }/verifyemail?token=${hashedToken}"</a>here to ${
+      html: `<p>Click <a href="${process.env.DOMAIN}${
+        emailType === "VERIFY" ? "/verifyemail" : "/forgotpass"
+      }?token=${hashedToken}"</a>here to ${
         emailType === "VERIFY" ? "verify your email" : "reset your password"
       }</p>`,
     };

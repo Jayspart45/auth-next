@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import axios from "axios";
-import { set } from "mongoose";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
